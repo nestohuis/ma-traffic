@@ -120,7 +120,7 @@ export default {
 -Traffic Web View : ${this.digitGrouping(this.web.up)} / ${this.digitGrouping(this.web.uv)} (UP/UV)
 -Traffic Mob Apps : ${this.digitGrouping(this.app.up)} / ${this.digitGrouping(this.app.uv)} (UP/UV)
 -Total Traffic : ${this.digitGrouping(this.total)} (UV)
--Conv. : ${this.digitGrouping(this.rate)} ( ${this.digitGrouping(this.trx)} Trx )`;
+-Conv. : ${this.rate} ( ${this.digitGrouping(this.trx)} Trx )`;
     },
   },
 

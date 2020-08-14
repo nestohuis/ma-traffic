@@ -94,12 +94,12 @@
           <div class="traffic-preview">
             <pre>{{ contentHeader }}</pre>
             <transition-group name="fade">
-              <pre v-if="traffics.hotel" class="report-item">{{ traffics.hotel }}</pre>
-              <pre v-if="traffics.flightDom" class="report-item">{{ traffics.flightDom }}</pre>
-              <pre v-if="traffics.flightInt" class="report-item">{{ traffics.flightInt }}</pre>
-              <pre v-if="traffics.train" class="report-item">{{ traffics.train }}</pre>
-              <pre v-if="traffics.explore" class="report-item">{{ traffics.explore }}</pre>
-              <pre v-if="traffics.tour" class="report-item">{{ traffics.tour }}</pre>
+              <pre v-if="traffics.hotel" key="1" class="pr-item">{{ traffics.hotel }}</pre>
+              <pre v-if="traffics.flightDom" key="2" class="pr-item">{{ traffics.flightDom }}</pre>
+              <pre v-if="traffics.flightInt" key="3" class="pr-item">{{ traffics.flightInt }}</pre>
+              <pre v-if="traffics.train" key="4" class="pr-item">{{ traffics.train }}</pre>
+              <pre v-if="traffics.explore" key="5" class="pr-item">{{ traffics.explore }}</pre>
+              <pre v-if="traffics.tour" key="6" class="pr-item">{{ traffics.tour }}</pre>
             </transition-group>
           </div>
         </div>
@@ -290,7 +290,7 @@ ${this.traffics.tour}`;
     border-radius: 0.5rem
   }
 
-  .report-item {
+  .pr-item {
     transition: all 1s ease;
     display: block;
   }

@@ -94,24 +94,12 @@
           <div class="traffic-preview">
             <pre>{{ contentHeader }}</pre>
             <transition-group name="fade">
-              <pre v-if="traffics.hotel" key="hotel" class="report-item">
-                {{ traffics.hotel }}
-              </pre>
-              <pre v-if="traffics.flightDom" key="flightDom" class="report-item">
-                {{ traffics.flightDom }}
-              </pre>
-              <pre v-if="traffics.flightInt" key="flightInt" class="report-item">
-                {{ traffics.flightInt }}
-              </pre>
-              <pre v-if="traffics.train" key="train" class="report-item">
-                {{ traffics.train }}
-              </pre>
-              <pre v-if="traffics.explore" key="explore" class="report-item">
-                {{ traffics.explore }}
-              </pre>
-              <pre v-if="traffics.tour" key="tour" class="report-item">
-                {{ traffics.tour }}
-              </pre>
+              <pre v-if="traffics.hotel" class="report-item">{{ traffics.hotel }}</pre>
+              <pre v-if="traffics.flightDom" class="report-item">{{ traffics.flightDom }}</pre>
+              <pre v-if="traffics.flightInt" class="report-item">{{ traffics.flightInt }}</pre>
+              <pre v-if="traffics.train" class="report-item">{{ traffics.train }}</pre>
+              <pre v-if="traffics.explore" class="report-item">{{ traffics.explore }}</pre>
+              <pre v-if="traffics.tour" class="report-item">{{ traffics.tour }}</pre>
             </transition-group>
           </div>
         </div>

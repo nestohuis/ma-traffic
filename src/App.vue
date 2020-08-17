@@ -212,8 +212,8 @@ ${this.traffics.tour}`;
 
     getPeriodTime() {
       const now = dayjs().hour();
-      const selected = this.options.times.findIndex((i) => i.hour > now);
-      return this.options.times[selected].label;
+      const selected = this.options.times.findIndex((i) => i.hour >= now);
+      return (selected > 0) ? this.options.times[selected].label : null;
     },
 
     getToday() {

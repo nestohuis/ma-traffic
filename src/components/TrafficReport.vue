@@ -76,7 +76,6 @@ export default {
     },
 
     report() {
-      console.log('report run');
       return {
         all: this.generateAllReport(),
         hotel: this.generateReport(this.traffics.hotel, 'Hotel'),

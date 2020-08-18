@@ -79,14 +79,14 @@ export default {
   data() {
     return {
       web: {
-        up: 0,
-        uv: 0,
+        up: null,
+        uv: null,
       },
       app: {
-        up: 0,
-        uv: 0,
+        up: null,
+        uv: null,
       },
-      trx: 0,
+      trx: null,
     };
   },
 

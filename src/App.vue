@@ -208,7 +208,8 @@ export default {
     getPeriodTime() {
       const now = dayjs().hour();
       const selected = this.options.times.findIndex((i) => i.hour >= now);
-      return (selected > 0) ? this.options.times[selected].label : null;
+      const index = (selected > 0) ? selected : 0;
+      return this.options.times[index].label;
     },
 
     getToday() {

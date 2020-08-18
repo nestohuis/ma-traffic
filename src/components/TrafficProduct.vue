@@ -13,14 +13,16 @@
           <input type="number"
             v-model.number="web.up"
             min="0"
-            class="form-field" />
+            class="form-field"
+            @input="updateData" />
         </div>
         <div class="form-group">
           <span class="form-label">UV</span>
           <input type="number"
             v-model.number="web.uv"
             min="0"
-            class="form-field" />
+            class="form-field"
+            @input="updateData" />
         </div>
       </div>
 
@@ -31,16 +33,60 @@
           <input type="number"
             v-model.number="app.up"
             min="0"
-            class="form-field" />
+            class="form-field"
+            @input="updateData" />
         </div>
         <div class="form-group">
           <span class="form-label">UV</span>
           <input type="number"
             v-model.number="app.uv"
             min="0"
-            class="form-field" />
+            class="form-field"
+            @input="updateData" />
         </div>
       </div>
+
+      <template v-if="isEndDay">
+        <div class="form-section">
+          <div class="form-section-title">Month to Date</div>
+          <div class="form-group">
+            <span class="form-label">CM</span>
+            <input type="number"
+              v-model.number="mtd.current"
+              min="0"
+              class="form-field"
+              @input="updateData" />
+          </div>
+          <div class="form-group">
+            <span class="form-label">PM</span>
+            <input type="number"
+              v-model.number="mtd.past"
+              min="0"
+              class="form-field"
+              @input="updateData" />
+          </div>
+        </div>
+
+        <div class="form-section">
+          <div class="form-section-title">Year to Date</div>
+          <div class="form-group">
+            <span class="form-label">CY</span>
+            <input type="number"
+              v-model.number="ytd.current"
+              min="0"
+              class="form-field"
+              @input="updateData" />
+          </div>
+          <div class="form-group">
+            <span class="form-label">PY</span>
+            <input type="number"
+              v-model.number="ytd.past"
+              min="0"
+              class="form-field"
+              @input="updateData" />
+          </div>
+        </div>
+      </template>
 
       <div class="form-section">
         <div class="form-section-title">Transactions</div>
@@ -49,7 +95,8 @@
           <input type="number"
             v-model.number="trx"
             min="0"
-            class="form-field" />
+            class="form-field"
+            @input="updateData" />
         </div>
       </div>
     </div>
@@ -57,10 +104,8 @@
 </template>
 
 <script>
-import numeral from 'numeral';
-
 export default {
-  name: 'ProductTraffic',
+  name: 'TrafficProduct',
 
   props: {
     name: {
@@ -73,6 +118,12 @@ export default {
       type: String,
       required: true,
       default: '',
+    },
+
+    isEndDay: {
+      type: Boolean,
+      required: false,
+      default: false,
     },
   },
 
@@ -87,47 +138,39 @@ export default {
         uv: null,
       },
       trx: null,
+      mtd: {
+        current: null,
+        past: null,
+      },
+      ytd: {
+        current: null,
+        past: null,
+      },
     };
   },
 
-  watch: {
-    report(val) {
-      if (val) {
-        this.$emit('update', {
-          type: this.type,
-          content: this.report,
-        });
-      }
-    },
-  },
-
   computed: {
-    total() {
-      return this.web.uv + this.app.uv;
-    },
-
-    rate() {
-      if (!this.total && !this.trx) return 0;
-      return `${((this.trx / this.total) * 100).toFixed(2)}%`;
-    },
-
     iconUrl() {
       return `/images/${this.type}.svg`;
     },
+  },
 
-    report() {
-      return `*${this.name} Traffic*
--Traffic Web View : ${this.digitGrouping(this.web.up)} / ${this.digitGrouping(this.web.uv)} (UP/UV)
--Traffic Mob Apps : ${this.digitGrouping(this.app.up)} / ${this.digitGrouping(this.app.uv)} (UP/UV)
--Total Traffic : ${this.digitGrouping(this.total)} (UV)
--Conv. : ${this.rate} ( ${this.digitGrouping(this.trx)} Trx )`;
-    },
+  created() {
+    this.updateData();
   },
 
   methods: {
-    digitGrouping(num) {
-      if (!num) return 0;
-      return numeral(num).format('0,0');
+    updateData() {
+      this.$emit('update', {
+        type: this.type,
+        data: {
+          web: this.web,
+          app: this.app,
+          trx: this.trx,
+          mtd: this.mtd,
+          ytd: this.ytd,
+        },
+      });
     },
   },
 };

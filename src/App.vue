@@ -12,8 +12,7 @@
             Reset
           </button>
           <button class="btn btn-primary"
-            v-clipboard:copy="contentReport"
-            v-clipboard:success="onCopy">
+            @click="doCopy">
             Copy
             <img src="./assets/image/document.svg" alt="Copy">
           </button>
@@ -54,53 +53,55 @@
 
         <div class="traffics">
           <div class="traffic-form">
-            <ProductTraffic
+            <TrafficProduct
               name="Hotel"
               type="hotel"
               key="hotel"
+              :is-end-day="isEndDay"
               @update="setData" />
 
-            <ProductTraffic
+            <TrafficProduct
               name="Flight Domestic"
               type="flightDom"
               key="flightDom"
+              :is-end-day="isEndDay"
               @update="setData" />
 
-            <ProductTraffic
+            <TrafficProduct
               name="Flight International"
               type="flightInt"
               key="flightInt"
+              :is-end-day="isEndDay"
               @update="setData" />
 
-            <ProductTraffic
+            <TrafficProduct
               name="Train"
               type="train"
               key="train"
+              :is-end-day="isEndDay"
               @update="setData" />
 
-            <ProductTraffic
+            <TrafficProduct
               name="Explore"
               type="explore"
               key="explore"
+              :is-end-day="isEndDay"
               @update="setData" />
 
-            <ProductTraffic
+            <TrafficProduct
               name="Tour"
               type="tour"
               key="tour"
+              :is-end-day="isEndDay"
               @update="setData" />
           </div>
 
           <div class="traffic-preview">
-            <pre>{{ contentHeader }}</pre>
-            <transition-group name="fade">
-              <pre v-if="traffics.hotel" key="1" class="pr-item">{{ traffics.hotel }}</pre>
-              <pre v-if="traffics.flightDom" key="2" class="pr-item">{{ traffics.flightDom }}</pre>
-              <pre v-if="traffics.flightInt" key="3" class="pr-item">{{ traffics.flightInt }}</pre>
-              <pre v-if="traffics.train" key="4" class="pr-item">{{ traffics.train }}</pre>
-              <pre v-if="traffics.explore" key="5" class="pr-item">{{ traffics.explore }}</pre>
-              <pre v-if="traffics.tour" key="6" class="pr-item">{{ traffics.tour }}</pre>
-            </transition-group>
+            <TrafficReport
+              :datetime="datetime"
+              :is-copy="isCopy"
+              :is-end-day="isEndDay"
+              :traffics="traffics" />
           </div>
         </div>
       </div>
@@ -112,13 +113,15 @@
 
 <script>
 import dayjs from 'dayjs';
-import ProductTraffic from './components/ProductTraffic.vue';
+import TrafficProduct from './components/TrafficProduct.vue';
+import TrafficReport from './components/TrafficReport.vue';
 
 export default {
   name: 'App',
 
   components: {
-    ProductTraffic,
+    TrafficProduct,
+    TrafficReport,
   },
 
   data() {
@@ -131,12 +134,12 @@ export default {
       },
 
       traffics: {
-        hotel: '',
-        flightDom: '',
-        flightInt: '',
-        train: '',
-        explore: '',
-        tour: '',
+        hotel: null,
+        flightDom: null,
+        flightInt: null,
+        train: null,
+        explore: null,
+        tour: null,
       },
 
       options: {
@@ -178,26 +181,18 @@ export default {
           },
         ],
       },
+
+      isCopy: false,
     };
   },
 
   computed: {
+    isEndDay() {
+      return (this.datetime.hour === '23:59');
+    },
+
     years() {
       return Array.from({ length: 3 }, (v, i) => 2020 + i);
-    },
-
-    contentHeader() {
-      return `*${this.datetime.date} ${this.datetime.month} ${this.datetime.year} ${this.datetime.hour}*`;
-    },
-
-    contentReport() {
-      return `${this.contentHeader}\n
-${this.traffics.hotel}\n
-${this.traffics.flightDom}\n
-${this.traffics.flightInt}\n
-${this.traffics.train}\n
-${this.traffics.explore}\n
-${this.traffics.tour}`;
     },
   },
 
@@ -226,11 +221,16 @@ ${this.traffics.tour}`;
     },
 
     setData(payload) {
-      this.traffics[payload.type] = payload.content;
+      const { type, data } = payload;
+      this.traffics[type] = data;
     },
 
-    onCopy() {
-      this.$toasted.success('Text successfully copied!');
+    doCopy() {
+      this.isCopy = !this.isCopy;
+
+      setTimeout(() => {
+        this.isCopy = !this.isCopy;
+      }, 1000);
     },
   },
 };
@@ -285,13 +285,6 @@ ${this.traffics.tour}`;
     margin-left: 2rem;
     padding: 1rem 2rem;
     background-color: #f8f8f8;
-    font-size: 12px;
-    line-height: 1.5;
     border-radius: 0.5rem
-  }
-
-  .pr-item {
-    transition: all 1s ease;
-    display: block;
   }
 </style>

@@ -88,8 +88,18 @@ export default {
     },
 
     contentReport() {
-      return `${this.trafficHeader}\n
+      if (this.isEndDay) {
+        return `${this.trafficHeader}\n
 ${this.report.all}\n
+${this.report.hotel}\n
+${this.report.flightDom}\n
+${this.report.flightInt}\n
+${this.report.train}\n
+${this.report.explore}\n
+${this.report.tour}`;
+      }
+
+      return `${this.trafficHeader}\n
 ${this.report.hotel}\n
 ${this.report.flightDom}\n
 ${this.report.flightInt}\n

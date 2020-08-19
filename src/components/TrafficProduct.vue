@@ -12,17 +12,21 @@
           <span class="form-label">UP</span>
           <input type="number"
             v-model.number="web.up"
+            ref="webUp"
             min="0"
             class="form-field"
-            @input="updateData" />
+            @input="updateData"
+            @keyup.enter="$refs.webUv.focus" />
         </div>
         <div class="form-group">
           <span class="form-label">UV</span>
           <input type="number"
             v-model.number="web.uv"
+            ref="webUv"
             min="0"
             class="form-field"
-            @input="updateData" />
+            @input="updateData"
+            @keyup.enter="$refs.appUp.focus" />
         </div>
       </div>
 
@@ -32,17 +36,21 @@
           <span class="form-label">UP</span>
           <input type="number"
             v-model.number="app.up"
+            ref="appUp"
             min="0"
             class="form-field"
-            @input="updateData" />
+            @input="updateData"
+            @keyup.enter="$refs.appUv.focus" />
         </div>
         <div class="form-group">
           <span class="form-label">UV</span>
           <input type="number"
             v-model.number="app.uv"
+            ref="appUv"
             min="0"
             class="form-field"
-            @input="updateData" />
+            @input="updateData"
+            @keyup.enter="handleTrxFocus" />
         </div>
       </div>
 
@@ -53,17 +61,21 @@
             <span class="form-label">CM</span>
             <input type="number"
               v-model.number="mtd.current"
+              ref="mtdCurrent"
               min="0"
               class="form-field"
-              @input="updateData" />
+              @input="updateData"
+              @keyup.enter="$refs.mtdPast.focus" />
           </div>
           <div class="form-group">
             <span class="form-label">PM</span>
             <input type="number"
               v-model.number="mtd.past"
+              ref="mtdPast"
               min="0"
               class="form-field"
-              @input="updateData" />
+              @input="updateData"
+              @keyup.enter="$refs.ytdCurrent.focus" />
           </div>
         </div>
 
@@ -73,17 +85,21 @@
             <span class="form-label">CY</span>
             <input type="number"
               v-model.number="ytd.current"
+              ref="ytdCurrent"
               min="0"
               class="form-field"
-              @input="updateData" />
+              @input="updateData"
+              @keyup.enter="$refs.ytdPast.focus" />
           </div>
           <div class="form-group">
             <span class="form-label">PY</span>
             <input type="number"
               v-model.number="ytd.past"
+              ref="ytdPast"
               min="0"
               class="form-field"
-              @input="updateData" />
+              @input="updateData"
+              @keyup.enter="$refs.trx.focus" />
           </div>
         </div>
       </template>
@@ -94,9 +110,11 @@
           <span class="form-label">TX</span>
           <input type="number"
             v-model.number="trx"
+            ref="trx"
             min="0"
             class="form-field"
-            @input="updateData" />
+            @input="updateData"
+            @keyup.enter="$emit('next', type)" />
         </div>
       </div>
     </div>
@@ -160,6 +178,14 @@ export default {
   },
 
   methods: {
+    handleTrxFocus() {
+      if (!this.isEndDay) {
+        this.$refs.trx.focus();
+      } else {
+        this.$refs.mtdCurrent.focus();
+      }
+    },
+
     updateData() {
       this.$emit('update', {
         type: this.type,

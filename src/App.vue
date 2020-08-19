@@ -205,16 +205,32 @@ export default {
       window.location.reload();
     },
 
+    getPeriodDate() {
+      const hour = dayjs().hour();
+      const endDayDate = dayjs().subtract(1, 'day').format('DD');
+      const now = dayjs().date();
+      return (hour < 9) ? endDayDate : now;
+    },
+
     getPeriodTime() {
-      const now = dayjs().hour();
-      const selected = this.options.times.findIndex((i) => i.hour >= now);
-      const index = (selected > 0) ? selected : 0;
+      const hour = dayjs().subtract(1, 'hour').format('H');
+      const selected = this.options.times.findIndex((i) => i.hour >= hour);
+      let index = 0;
+
+      if (selected > 0) {
+        index = selected;
+      }
+
+      if (hour < 9) {
+        index = 4;
+      }
+
       return this.options.times[index].label;
     },
 
     getToday() {
       this.datetime = {
-        date: dayjs().date(),
+        date: this.getPeriodDate(),
         month: this.options.months[dayjs().month()],
         year: dayjs().year(),
         hour: this.getPeriodTime(),
@@ -245,6 +261,11 @@ export default {
     margin-bottom: 1.5rem;
     border-bottom: 1px solid #ebebeb;
 
+    @media only screen and (max-width: 768px) {
+      display: flex;
+      justify-content: space-between;
+    }
+
     input,
     select {
       display: inline-block;
@@ -255,6 +276,11 @@ export default {
       border: 1px solid var(--input-border);
       background: var(--input-background);
       transition: border .3s ease;
+
+      @media only screen and (max-width: 768px) {
+        width: 100%;
+        font-size: 1rem;
+      }
 
       &:focus {
         border-color: var(--input-border-focus);
@@ -274,11 +300,19 @@ export default {
 
   .traffics {
     display: flex;
-    justify-content: space-between
+    justify-content: space-between;
+
+    @media only screen and (max-width: 768px) {
+      flex-wrap: wrap;
+    }
   }
 
   .traffic-form {
     width: 60%;
+
+    @media only screen and (max-width: 768px) {
+      width: 100%;
+    }
   }
 
   .traffic-preview {
@@ -286,6 +320,13 @@ export default {
     margin-left: 2rem;
     padding: 1rem 2rem;
     background-color: #f8f8f8;
-    border-radius: 0.5rem
+    border-radius: 0.5rem;
+
+    @media only screen and (max-width: 768px) {
+      margin-top: 1rem;
+      margin-left: 0;
+      padding: 0 1rem;
+      width: 100%;
+    }
   }
 </style>

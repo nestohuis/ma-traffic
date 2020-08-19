@@ -88,8 +88,18 @@ export default {
     },
 
     contentReport() {
-      return `${this.trafficHeader}\n
+      if (this.isEndDay) {
+        return `${this.trafficHeader}\n
 ${this.report.all}\n
+${this.report.hotel}\n
+${this.report.flightDom}\n
+${this.report.flightInt}\n
+${this.report.train}\n
+${this.report.explore}\n
+${this.report.tour}`;
+      }
+
+      return `${this.trafficHeader}\n
 ${this.report.hotel}\n
 ${this.report.flightDom}\n
 ${this.report.flightInt}\n
@@ -189,6 +199,10 @@ ${this.report.tour}`;
   .traffic-report {
     font-size: 12px;
     line-height: 1.5;
+
+    @media only screen and (max-width: 768px) {
+      font-size: 14px;
+    }
   }
 
   .pr-item {

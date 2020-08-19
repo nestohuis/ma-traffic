@@ -203,15 +203,36 @@ export default {
       width: 25%;
       margin-right: 2rem;
 
+      @media only screen and (max-width: 768px) {
+        width: 100%;
+        margin: 0 0 1rem 0;
+      }
+
       img {
         width: 2.5rem;
         margin-bottom: 0.5rem;
         object-fit: contain;
+
+        @media only screen and (max-width: 768px) {
+          width: 1rem;
+          margin: 0 1rem 0 0;
+        }
+      }
+
+      h4 {
+        @media only screen and (max-width: 768px) {
+          display: inline-block;
+          margin: 0;
+        }
       }
     }
 
     .form-column {
       width: calc(75% - 2rem);
+
+      @media only screen and (max-width: 768px) {
+        width: 100%;
+      }
     }
 
     .form-section {

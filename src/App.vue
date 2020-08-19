@@ -205,16 +205,32 @@ export default {
       window.location.reload();
     },
 
+    getPeriodDate() {
+      const hour = dayjs().hour();
+      const endDayDate = dayjs().subtract(1, 'day').format('DD');
+      const now = dayjs().date();
+      return (hour < 9) ? endDayDate : now;
+    },
+
     getPeriodTime() {
-      const now = dayjs().hour();
-      const selected = this.options.times.findIndex((i) => i.hour >= now);
-      const index = (selected > 0) ? selected : 0;
+      const hour = dayjs().subtract(1, 'hour').format('H');
+      const selected = this.options.times.findIndex((i) => i.hour >= hour);
+      let index = 0;
+
+      if (selected > 0) {
+        index = selected;
+      }
+
+      if (hour < 9) {
+        index = 4;
+      }
+
       return this.options.times[index].label;
     },
 
     getToday() {
       this.datetime = {
-        date: dayjs().date(),
+        date: this.getPeriodDate(),
         month: this.options.months[dayjs().month()],
         year: dayjs().year(),
         hour: this.getPeriodTime(),

@@ -22,6 +22,7 @@
       <div id="content">
         <div class="traffic-datetime">
           <input v-model="datetime.date"
+            ref="number"
             type="number"
             min="1"
             max="31">
@@ -52,49 +53,60 @@
         </div>
 
         <div class="traffics">
-          <div class="traffic-form">
+          <form @submit.prevent="" class="traffic-form">
             <TrafficProduct
               name="Hotel"
+              ref="hotel"
               type="hotel"
               key="hotel"
               :is-end-day="isEndDay"
+              @next="handleNext"
               @update="setData" />
 
             <TrafficProduct
               name="Flight Domestic"
+              ref="flightDom"
               type="flightDom"
               key="flightDom"
               :is-end-day="isEndDay"
+              @next="handleNext"
               @update="setData" />
 
             <TrafficProduct
               name="Flight International"
+              ref="flightInt"
               type="flightInt"
               key="flightInt"
               :is-end-day="isEndDay"
+              @next="handleNext"
               @update="setData" />
 
             <TrafficProduct
               name="Train"
+              ref="train"
               type="train"
               key="train"
               :is-end-day="isEndDay"
+              @next="handleNext"
               @update="setData" />
 
             <TrafficProduct
               name="Explore"
+              ref="explore"
               type="explore"
               key="explore"
               :is-end-day="isEndDay"
+              @next="handleNext"
               @update="setData" />
 
             <TrafficProduct
               name="Tour"
+              ref="tour"
               type="tour"
               key="tour"
               :is-end-day="isEndDay"
               @update="setData" />
-          </div>
+          </form>
 
           <div class="traffic-preview">
             <TrafficReport
@@ -240,6 +252,32 @@ export default {
     setData(payload) {
       const { type, data } = payload;
       this.traffics[type] = data;
+    },
+
+    handleNext(payload) {
+      let nextForm = 'flightDom';
+
+      switch (payload) {
+        case 'hotel':
+          nextForm = 'flightDom';
+          break;
+        case 'flightDom':
+          nextForm = 'flightInt';
+          break;
+        case 'flightInt':
+          nextForm = 'train';
+          break;
+        case 'train':
+          nextForm = 'explore';
+          break;
+        case 'explore':
+          nextForm = 'tour';
+          break;
+        default:
+          nextForm = 'flightDom';
+      }
+
+      this.$refs[nextForm].$refs.webUp.focus();
     },
 
     doCopy() {

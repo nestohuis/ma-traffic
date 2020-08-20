@@ -14,9 +14,6 @@
 </template>
 
 <script>
-import dayjs from 'dayjs';
-import numeral from 'numeral';
-
 export default {
   name: 'TrafficReport',
 
@@ -178,11 +175,11 @@ ${this.report.tour}`;
       const appPercentage = `${((appUp / total) * 100).toFixed(2)}%`;
 
       return `*All Products*
--Traffic Web View : ${webUp} ( ${webPercentage} )
--Traffic Mob Apps : ${appUp} ( ${appPercentage} )
--Total Traffic : ${total} ( 100% )
--Trx MTD ${this.month} ${this.year} : ${mtdCurrent}/ ${this.pastMonth} ${this.year} : ${mtdPast}
--Trx YTD ${this.year} : ${ytdCurrent}/ ${this.pastYear} : ${ytdPast}`;
+-Traffic Web View : ${this.digitGrouping(webUp)} ( ${webPercentage} )
+-Traffic Mob Apps : ${this.digitGrouping(appUp)} ( ${appPercentage} )
+-Total Traffic : ${this.digitGrouping(total)} ( 100% )
+-Trx MTD ${this.month} ${this.year} : ${this.digitGrouping(mtdCurrent)}/ ${this.pastMonth} ${this.year} : ${this.digitGrouping(mtdPast)}
+-Trx YTD ${this.year} : ${this.digitGrouping(ytdCurrent)}/ ${this.pastYear} : ${this.digitGrouping(ytdPast)}`;
     },
 
     generateReport(data, product) {

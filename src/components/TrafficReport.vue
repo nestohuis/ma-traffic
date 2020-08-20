@@ -1,22 +1,17 @@
 <template>
   <div class="traffic-report">
     <pre>{{ trafficHeader }}</pre>
-    <transition-group name="fade">
-      <pre v-if="isEndDay" key="0" class="ri">{{ report.all }}</pre>
-      <pre v-if="traffics.hotel" key="1" class="ri">{{ report.hotel }}</pre>
-      <pre v-if="traffics.flightDom" key="2" class="ri">{{ report.flightDom }}</pre>
-      <pre v-if="traffics.flightInt" key="3" class="ri">{{ report.flightInt }}</pre>
-      <pre v-if="traffics.train" key="4" class="ri">{{ report.train }}</pre>
-      <pre v-if="traffics.explore" key="5" class="ri">{{ report.explore }}</pre>
-      <pre v-if="traffics.tour" key="6" class="ri">{{ report.tour }}</pre>
-    </transition-group>
+    <pre v-if="isEndDay">{{ report.all }}</pre>
+    <pre v-if="traffics.hotel">{{ report.hotel }}</pre>
+    <pre v-if="traffics.flightDom">{{ report.flightDom }}</pre>
+    <pre v-if="traffics.flightInt">{{ report.flightInt }}</pre>
+    <pre v-if="traffics.train">{{ report.train }}</pre>
+    <pre v-if="traffics.explore">{{ report.explore }}</pre>
+    <pre v-if="traffics.tour">{{ report.tour }}</pre>
   </div>
 </template>
 
 <script>
-import dayjs from 'dayjs';
-import numeral from 'numeral';
-
 export default {
   name: 'TrafficReport',
 
@@ -178,11 +173,11 @@ ${this.report.tour}`;
       const appPercentage = `${((appUp / total) * 100).toFixed(2)}%`;
 
       return `*All Products*
--Traffic Web View : ${webUp} ( ${webPercentage} )
--Traffic Mob Apps : ${appUp} ( ${appPercentage} )
--Total Traffic : ${total} ( 100% )
--Trx MTD ${this.month} ${this.year} : ${mtdCurrent}/ ${this.pastMonth} ${this.year} : ${mtdPast}
--Trx YTD ${this.year} : ${ytdCurrent}/ ${this.pastYear} : ${ytdPast}`;
+-Traffic Web View : ${this.digitGrouping(webUp)} ( ${webPercentage} )
+-Traffic Mob Apps : ${this.digitGrouping(appUp)} ( ${appPercentage} )
+-Total Traffic : ${this.digitGrouping(total)} ( 100% )
+-Trx MTD ${this.month} ${this.year} : ${this.digitGrouping(mtdCurrent)}/ ${this.pastMonth} ${this.year} : ${this.digitGrouping(mtdPast)}
+-Trx YTD ${this.year} : ${this.digitGrouping(ytdCurrent)}/ ${this.pastYear} : ${this.digitGrouping(ytdPast)}`;
     },
 
     generateReport(data, product) {
@@ -195,18 +190,20 @@ ${this.report.tour}`;
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
   .traffic-report {
+    position: sticky;
+    top: 1rem;
+    padding: 1rem 2rem;
+    background-color: #f8f8f8;
+    border-radius: 0.5rem;
     font-size: 12px;
     line-height: 1.5;
+    color: #333;
 
     @media only screen and (max-width: 768px) {
       font-size: 14px;
+      padding: 0.5rem 1rem;
     }
-  }
-
-  .pr-item {
-    transition: all 1s ease;
-    display: block;
   }
 </style>

@@ -6,7 +6,7 @@
           <img src="./assets/image/report.png" alt="Report">
           Helpdesk Report
         </div>
-        <div>
+        <div class="header-tool">
           <button class="btn btn-outline-primary"
             @click="resetForm">
             Reset
@@ -118,7 +118,14 @@
         </div>
       </div>
 
-      <div id="footer"></div>
+      <div id="footer">
+        <span>Copyright &copy; 2020. All rights reserved</span>
+        <button class="btn btn-outline-primary"
+          @click="doCopy">
+          Copy
+          <img src="./assets/image/document.svg" alt="Copy">
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -356,14 +363,10 @@ export default {
   .traffic-preview {
     width: 40%;
     margin-left: 2rem;
-    padding: 1rem 2rem;
-    background-color: #f8f8f8;
-    border-radius: 0.5rem;
 
     @media only screen and (max-width: 768px) {
       margin-top: 1rem;
       margin-left: 0;
-      padding: 0 1rem;
       width: 100%;
     }
   }

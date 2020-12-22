@@ -55,6 +55,15 @@
         <div class="traffics">
           <form @submit.prevent="" class="traffic-form">
             <TrafficProduct
+              name="AladinMall"
+              ref="mall"
+              type="mall"
+              key="mall"
+              :is-end-day="isEndDay"
+              @next="handleNext"
+              @update="setData" />
+
+            <TrafficProduct
               name="Hotel"
               ref="hotel"
               type="hotel"
@@ -153,6 +162,7 @@ export default {
       },
 
       traffics: {
+        mall: null,
         hotel: null,
         flightDom: null,
         flightInt: null,
@@ -265,6 +275,9 @@ export default {
       let nextForm = 'flightDom';
 
       switch (payload) {
+        case 'mall':
+          nextForm = 'hotel';
+          break;
         case 'hotel':
           nextForm = 'flightDom';
           break;

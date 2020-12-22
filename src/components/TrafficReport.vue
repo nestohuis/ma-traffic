@@ -2,6 +2,7 @@
   <div class="traffic-report">
     <pre>{{ trafficHeader }}</pre>
     <pre v-if="isEndDay">{{ report.all }}</pre>
+    <pre v-if="traffics.mall">{{ report.mall }}</pre>
     <pre v-if="traffics.hotel">{{ report.hotel }}</pre>
     <pre v-if="traffics.flightDom">{{ report.flightDom }}</pre>
     <pre v-if="traffics.flightInt">{{ report.flightInt }}</pre>
@@ -73,6 +74,7 @@ export default {
     report() {
       return {
         all: this.generateAllReport(),
+        mall: this.generateReport(this.traffics.mall, 'AladinMall'),
         hotel: this.generateReport(this.traffics.hotel, 'Hotel'),
         flightDom: this.generateReport(this.traffics.flightDom, 'Flight Domestic'),
         flightInt: this.generateReport(this.traffics.flightInt, 'Flight International'),
@@ -86,6 +88,7 @@ export default {
       if (this.isEndDay) {
         return `${this.trafficHeader}\n
 ${this.report.all}\n
+${this.report.mall}\n
 ${this.report.hotel}\n
 ${this.report.flightDom}\n
 ${this.report.flightInt}\n
@@ -95,6 +98,7 @@ ${this.report.tour}`;
       }
 
       return `${this.trafficHeader}\n
+${this.report.mall}\n
 ${this.report.hotel}\n
 ${this.report.flightDom}\n
 ${this.report.flightInt}\n

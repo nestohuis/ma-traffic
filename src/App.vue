@@ -108,13 +108,13 @@
               @next="handleNext"
               @update="setData" />
 
-            <TrafficProduct
+            <!-- <TrafficProduct
               name="Tour"
               ref="tour"
               type="tour"
               key="tour"
               :is-end-day="isEndDay"
-              @update="setData" />
+              @update="setData" /> -->
           </form>
 
           <div class="traffic-preview">

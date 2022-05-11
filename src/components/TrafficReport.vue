@@ -8,7 +8,6 @@
     <pre v-if="traffics.flightInt">{{ report.flightInt }}</pre>
     <pre v-if="traffics.train">{{ report.train }}</pre>
     <pre v-if="traffics.explore">{{ report.explore }}</pre>
-    <pre v-if="traffics.tour">{{ report.tour }}</pre>
   </div>
 </template>
 
@@ -80,7 +79,6 @@ export default {
         flightInt: this.generateReport(this.traffics.flightInt, 'Flight International'),
         train: this.generateReport(this.traffics.train, 'Train'),
         explore: this.generateReport(this.traffics.explore, 'Explore'),
-        tour: this.generateReport(this.traffics.tour, 'Tour'),
       };
     },
 
@@ -93,8 +91,7 @@ ${this.report.hotel}\n
 ${this.report.flightDom}\n
 ${this.report.flightInt}\n
 ${this.report.train}\n
-${this.report.explore}\n
-${this.report.tour}`;
+${this.report.explore}`;
       }
 
       return `${this.trafficHeader}\n
@@ -103,8 +100,7 @@ ${this.report.hotel}\n
 ${this.report.flightDom}\n
 ${this.report.flightInt}\n
 ${this.report.train}\n
-${this.report.explore}\n
-${this.report.tour}`;
+${this.report.explore}`;
     },
   },
 

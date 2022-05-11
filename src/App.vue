@@ -168,7 +168,6 @@ export default {
         flightInt: null,
         train: null,
         explore: null,
-        tour: null,
       },
 
       options: {
@@ -290,11 +289,8 @@ export default {
         case 'train':
           nextForm = 'explore';
           break;
-        case 'explore':
-          nextForm = 'tour';
-          break;
         default:
-          nextForm = 'flightDom';
+          nextForm = 'hotel';
       }
 
       this.$refs[nextForm].$refs.webUp.focus();
